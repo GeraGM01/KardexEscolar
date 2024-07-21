@@ -1,0 +1,187 @@
+﻿body {
+    font-size: 16px;
+    background-color: #f4f2ed;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.color-navegacion {
+    background-color: #094988;
+}
+
+.navbar, .dropdown-menu {
+    background-color: #094988;
+}
+
+.nav-link:active, .nav-link:focus, .nav-link:hover, .dropdown-item:active, .dropdown-item:focus, .dropdown:active, .dropdown:focus, .dropdown:hover {
+    color: rgba(255, 255, 255, 0.675);
+}
+
+.navbar-brand {
+    color: white;
+}
+
+.nav-link, .dropdown-item {
+    color: white;
+    font-weight: bold;
+}
+
+
+    .navbar-nav .nav-link:hover, .dropdown-item:hover {
+        color: rgba(137, 43, 226, 0.828) !important;
+        background-color: white !important;
+    }
+
+.navbar-nav {
+    padding-right: 85px;
+}
+
+.img-inicio {
+    width: 300px;
+    height: 300px;
+}
+
+
+.imagen-logo, .imagen-logo-nav {
+    width: 130px;
+    height: 50px;
+}
+
+.formulario-login {
+    background-color: whitesmoke;
+    text-align: center;
+    border-radius: 50px;
+    box-shadow: 2px 2px 5px rgba(150, 150, 150, 0.5);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 750px; /* Ajusta el ancho mÃ¡ximo segÃºn tus preferencias */
+    margin: 0 auto; /* Centra horizontalmente */
+}
+
+.img-sesion {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+.nota-docente, .nota-alumno {
+    color: blue;
+}
+
+.navbar-toggler {
+    background-color: #f4f2ed;
+}
+
+.nav-link-desp:active, .nav-link-desp:focus, .nav-link-desp:hover {
+    color: rgba(255, 255, 255, 0.675);
+}
+
+
+.error-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+.error-code {
+    font-size: 72px;
+    font-weight: bold;
+    color: #094988;
+}
+
+.error-message {
+    font-size: 24px;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+.lock-image {
+    max-width: 350px;
+    margin: 10px 0;
+    border-radius: 50%;
+    border: solid 1px rgba(0, 0, 0, 0.065);
+    box-shadow: 2px 2px 5px rgba(150, 150, 150, 0.5);
+}
+
+.back-button {
+    display: inline-block;
+    text-align: left;
+}
+
+.bi {
+    font-size: 100px;
+    color: #073a8f;
+}
+
+
+
+@media(max-width: 576px) {
+    #ocultarspan {
+        display: none;
+    }
+
+    .espaciado {
+        margin-bottom: 15px;
+    }
+
+    .texto-inicio {
+        margin: 0 auto;
+    }
+
+    .imagen-logo {
+        margin: 0 auto;
+    }
+
+    .card {
+        margin: 15px 0;
+        box-shadow: 2px 2px 5px rgba(150, 150, 150, 0.5);
+    }
+}
+
+@media screen and (min-width: 577px) and (max-width: 992px) {
+    #ocultarspan {
+        display: none;
+    }
+
+    .espaciado {
+        margin-bottom: 15px;
+    }
+
+    .texto-inicio {
+        align-items: end;
+    }
+
+    .imagen-logo {
+        align-items: flex-start;
+    }
+
+    .card {
+        margin: 15px 0;
+        box-shadow: 2px 2px 5px rgba(150, 150, 150, 0.5);
+    }
+}
+
+
+@media screen and (min-width: 993px) and (max-width: 1400px) {
+
+    .espaciado {
+        margin-bottom: 15px;
+    }
+
+    .texto-inicio {
+        align-items: end;
+    }
+
+    .imagen-logo {
+        align-items: flex-start;
+    }
+
+    .card {
+        margin: 15px 0;
+        box-shadow: 2px 2px 5px rgba(150, 150, 150, 0.5);
+    }
+}
