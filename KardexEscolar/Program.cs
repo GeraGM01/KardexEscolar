@@ -11,6 +11,9 @@ opciones.UseSqlServer(builder.Configuration.GetConnectionString("ConexionASql"))
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+//Configuracion de la cadena de conexion a sql server mediante ADO NET
+builder.Services.AddSingleton(new Contexto(builder.Configuration.GetConnectionString("ConexionASql")));
+
 
 //Manejo de Cookies para el inicio de sesion
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

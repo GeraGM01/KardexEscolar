@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KardexEscolar.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace KardexEscolar.Datos
 {
@@ -10,6 +11,6 @@ namespace KardexEscolar.Datos
 
         }
 
-
+        public DbSet<Usuario> Usuario { get; set; }
     }
 }

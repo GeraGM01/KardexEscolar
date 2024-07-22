@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Data;
 
 namespace KardexEscolar.Models
 {
@@ -7,7 +8,7 @@ namespace KardexEscolar.Models
         [Key]
         public int Id_Usuario { get; set; }
 
-        [Required(ErrorMessage = "El campo Clave Unica es obligatorio")]
+        [Required(ErrorMessage = "El campo Clave Única es obligatorio")]
         public int Clave_Unica { get; set; }
 
         [Required(ErrorMessage = "El campo Contraseña es obligatorio")]
