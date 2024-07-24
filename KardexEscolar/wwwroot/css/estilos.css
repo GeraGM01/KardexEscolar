@@ -58,8 +58,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 750px; /* Ajusta el ancho mÃ¡ximo segÃºn tus preferencias */
-    margin: 0 auto; /* Centra horizontalmente */
+    max-width: 750px;
+    margin: 0 auto;
 }
 
 .img-sesion {

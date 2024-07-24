@@ -103,5 +103,10 @@ namespace KardexEscolar.Datos
             return listaRoles;
         }
 
+
+
+        //Dentro ya del sistema
+
+
     }
 }
