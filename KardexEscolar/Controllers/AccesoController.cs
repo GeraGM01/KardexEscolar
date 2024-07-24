@@ -21,6 +21,11 @@ namespace KardexEscolar.Controllers
 
         public IActionResult Index()
         {
+            //Verificamos si el usuario ya esta loggeado, si es asi lo mandamos directamente al Home
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 

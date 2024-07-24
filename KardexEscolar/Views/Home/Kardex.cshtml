@@ -1,91 +1,53 @@
-﻿@*
+﻿@model IEnumerable<KardexEscolar.Models.Materia_Calificacion>
+@using KardexEscolar.Controllers
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 
 <div class="container mt-5">
-    <h3 class="d-flex justify-content-center">Materias inscritas</h3>
+    <h3 class="d-flex justify-content-center mb-4">Materias inscritas</h3>
     <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Clave</th>
-                    <th scope="col">Grupo</th>
-                    <th scope="col">Nombre de la materia</th>
-                    <th scope="col">Parcial 1</th>
-                    <th scope="col">Parcial 2</th>
-                    <th scope="col">Parcial 3</th>
-                    <th scope="col">Parcial 4</th>
-                    <th scope="col">Ordinario</th>
-                    <th scope="col">Extraordinario</th>
-                    <th scope="col">Titulo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>twitter</td>
-                </tr>
-            </tbody>
-        </table>
-
+        @if (Model.Count() > 0)  //Verificamos que haya elementos en nuestra lista
+        {
+            <table class="table table-striped text-center" id="tblUsuarios">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Clave)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Grupo)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.NombreMateria)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_1)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_2)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_3)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_4)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Ordinario)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Extraordinario)</th>
+                        <th scope="col">@Html.DisplayNameFor(i => i.Titulo)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var campo in Model)
+                    {
+                        <tr>
+                            <th scope="row">@Html.DisplayFor(m => campo.Clave)</th>
+                            <td>@Html.DisplayFor(m => campo.Grupo)</td>
+                            <td>@Html.DisplayFor(m => campo.NombreMateria)</td>
+                            <td>@HomeController.determinaCalificacionNulo(campo.Parcial_1)</td>
+                            <td>@HomeController.determinaCalificacionNulo(campo.Parcial_2)</td>
+                            <td>@HomeController.determinaCalificacionNulo(campo.Parcial_3)</td>
+                            <td>@HomeController.determinaCalificacionNulo(campo.Parcial_4)</td>
+                            <td>@HomeController.determinaCalificacionNulo(campo.Ordinario)</td>
+                            <td>@HomeController.determinaCalificacionNulo(campo.Extraordinario)</td>
+                            <td>@HomeController.determinaCalificacionNulo(campo.Titulo)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p>No hay suficiente informacion para mostrar.</p>
+        }
     </div>
-</div>
-
-
-<div class="container mt-5">
-    <h2 class="d-flex justify-content-center">Kardex Semestral</h2>
-
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">Clave</th>
-                    <th scope="col">Grupo</th>
-                    <th scope="col">Nombre de la materia</th>
-                    <th scope="col">Parcial 1</th>
-                    <th scope="col">Parcial 2</th>
-                    <th scope="col">Parcial 3</th>
-                    <th scope="col">Parcial 4</th>
-                    <th scope="col">Ordinario</th>
-                    <th scope="col">Extraordinario</th>
-                    <th scope="col">Titulo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>twitter</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
 </div>

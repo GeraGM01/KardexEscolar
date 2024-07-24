@@ -92,6 +92,7 @@ namespace KardexEscolar.Datos
                                 listaRoles.Add(lector["Nombre_Rol"].ToString());
                             }
                         }
+                        conexion.Close();
                     }
                     catch (Exception ex)
                     {
@@ -106,7 +107,56 @@ namespace KardexEscolar.Datos
 
 
         //Dentro ya del sistema
+        public List<Materia_Calificacion> ObtenMateriaCalificacion(int clave_Unica)
+        {
+            Materia_Calificacion materiasCalificaciones = null;
+            List<Materia_Calificacion> listaMateriasCalificaciones = new List<Materia_Calificacion>();
+            using (SqlConnection conexion = new SqlConnection(_contexto.Conexion))
+            {
+                using (SqlCommand comando = new SqlCommand("SP_ObtenCalificacionesYMaterias", conexion))
+                {
+                    comando.CommandType = System.Data.CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Clave_Unica", clave_Unica);
+                    try
+                    {
+                        //Apertura de la conexión
+                        conexion.Open();
+                        //Ejecutar el procedimiento
+                        using (SqlDataReader lector = comando.ExecuteReader())
+                        {
+                            while (lector.Read())
+                            {
+                                materiasCalificaciones = new Materia_Calificacion
+                                {
+                                    Clave = (int)lector["Clave"],
+                                    Grupo = (int)lector["Grupo"],
+                                    NombreMateria = lector["NombreMateria"].ToString(),
+                                    //Tratamos diferentes estos datos ya que en algun momento pueden llegar a ser nulos
+                                    Parcial_1 = lector["Parcial_1"] != DBNull.Value ? Convert.ToSingle(lector["Parcial_1"]) : 0.0f,
+                                    Parcial_2 = lector["Parcial_2"] != DBNull.Value ? Convert.ToSingle(lector["Parcial_2"]) : 0.0f,
+                                    Parcial_3 = lector["Parcial_3"] != DBNull.Value ? Convert.ToSingle(lector["Parcial_3"]) : 0.0f,
+                                    Parcial_4 = lector["Parcial_4"] != DBNull.Value ? Convert.ToSingle(lector["Parcial_4"]) : 0.0f,
+                                    Ordinario = lector["Ordinario"] != DBNull.Value ? Convert.ToSingle(lector["Ordinario"]) : 0.0f,
+                                    Extraordinario = lector["Extraordinario"] != DBNull.Value ? Convert.ToSingle(lector["Extraordinario"]) : 0.0f,
+                                    Titulo = lector["Titulo"] != DBNull.Value ? Convert.ToSingle(lector["Titulo"]) : 0.0f,
+                                };
+                                listaMateriasCalificaciones.Add(materiasCalificaciones);
+                                //return materiasCalificaciones;
+                            }
+                        }
+                        conexion.Close();
+                        return listaMateriasCalificaciones;
+                    }
+                    catch (Exception ex)
+                    {
+                        // Manejo de la excepción (por ejemplo, registrar el error)
+                        Console.WriteLine(ex.Message);
+                    }
+                }
 
+            }
+            return null;
+        }
 
     }
 }
