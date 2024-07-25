@@ -40,12 +40,21 @@ namespace KardexEscolar.Controllers
             }
 
             LogicaDB logicaDB = new LogicaDB(_contexto);
-            var kardex = logicaDB.ObtenMateriaCalificacion(cu);
+            var kardexCalificaciones = logicaDB.ObtenMateriaCalificacion(cu);
 
+            var kardexProfesores = logicaDB.ObtenMateriaProfesor(cu);
 
+            //Encapsular tanto calificaciones y las materias dadas de alta, esto lo hacemos con un modelo auxiliar
 
-            return View(kardex);
+            var ProfesorMateriaAlumno = new ProfesorMateriaAlumno()
+            {
+                KardexCalificacion = kardexCalificaciones,
+                KardexMateriaProfesor = kardexProfesores
+            };
+
+            return View(ProfesorMateriaAlumno);
         }
+
 
         public async Task<IActionResult> Salir()
         {

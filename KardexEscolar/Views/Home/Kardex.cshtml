@@ -1,4 +1,4 @@
-﻿@model IEnumerable<KardexEscolar.Models.Materia_Calificacion>
+﻿@model KardexEscolar.Models.ProfesorMateriaAlumno
 @using KardexEscolar.Controllers
 @*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -7,27 +7,61 @@
 }
 
 <div class="container mt-5">
-    <h3 class="d-flex justify-content-center mb-4">Materias inscritas</h3>
+    <h3 class="d-flex justify-content-center mb-4 display-6">PROFESORES ASIGNADOS</h3>
     <div class="table-responsive">
-        @if (Model.Count() > 0)  //Verificamos que haya elementos en nuestra lista
+        @if (Model.KardexCalificacion.Count() > 0)  //Verificamos que haya elementos en nuestra lista
         {
             <table class="table table-striped text-center" id="tblUsuarios">
                 <thead>
                     <tr>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Clave)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Grupo)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.NombreMateria)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_1)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_2)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_3)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Parcial_4)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Ordinario)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Extraordinario)</th>
-                        <th scope="col">@Html.DisplayNameFor(i => i.Titulo)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexMateriaProfesor.First().Grupo)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexMateriaProfesor.First().NombreMateria)</th>
+                        <th scope="col">Profesor</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var campo in Model)
+                    @foreach (var campo in Model.KardexMateriaProfesor)
+                    {
+                        <tr>
+                            <th scope="row">@HomeController.determinaCalificacionNulo(campo.Grupo)</th>
+                            <td>@Html.DisplayFor(m => campo.NombreMateria)</td>
+                            <td>@Html.DisplayFor(m => campo.Nombre) @Html.DisplayFor(m => campo.Apellido_Paterno) @Html.DisplayFor(m => campo.Apellido_Materno)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="alert alert-warning" role="alert">
+                No hay suficiente informacion para mostrar.
+            </div>
+        }
+    </div>
+</div>
+
+<div class="container mt-5">
+    <h3 class="d-flex justify-content-center mb-4 display-6">CALIFICACIONES PARCIALES</h3>
+    <div class="table-responsive">
+        @if (Model.KardexCalificacion.Count() > 0)  //Verificamos que haya elementos en nuestra lista
+        {
+            <table class="table table-striped text-center" id="tblUsuarios">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Clave)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Grupo)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().NombreMateria)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Parcial_1)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Parcial_2)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Parcial_3)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Parcial_4)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Ordinario)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Extraordinario)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.KardexCalificacion.First().Titulo)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var campo in Model.KardexCalificacion)
                     {
                         <tr>
                             <th scope="row">@Html.DisplayFor(m => campo.Clave)</th>
@@ -47,7 +81,9 @@
         }
         else
         {
-            <p>No hay suficiente informacion para mostrar.</p>
+            <div class="alert alert-warning" role="alert">
+                No hay suficiente informacion para mostrar.
+            </div>
         }
     </div>
 </div>

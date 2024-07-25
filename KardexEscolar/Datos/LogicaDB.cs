@@ -158,5 +158,47 @@ namespace KardexEscolar.Datos
             return null;
         }
 
+        public List<Materia_Profesor> ObtenMateriaProfesor(int clave_Unica)
+        {
+            Materia_Profesor materiasProfesores = null;
+            List<Materia_Profesor> listaMateriasProfesores = new List<Materia_Profesor>();
+
+            using (SqlConnection conexion = new SqlConnection(_contexto.Conexion))
+            {
+                using (SqlCommand comando = new SqlCommand("SP_ObtenMateriasAlumno", conexion))
+                {
+                    comando.CommandType = System.Data.CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Clave_Unica", clave_Unica);
+
+                    try
+                    {
+                        conexion.Open();
+                        using (SqlDataReader lector = comando.ExecuteReader())
+                        {
+                            while (lector.Read())
+                            {
+                                materiasProfesores = new Materia_Profesor()
+                                {
+                                    Grupo = (int)lector["Grupo"],
+                                    NombreMateria = lector["NombreMateria"].ToString(),
+                                    Nombre = lector["Nombre"].ToString(),
+                                    Apellido_Paterno = lector["Apellido_Paterno"].ToString(),
+                                    Apellido_Materno = lector["Apellido_Materno"].ToString()
+                                };
+                                listaMateriasProfesores.Add(materiasProfesores);
+                            }
+                        }
+                        conexion.Close();
+                        return listaMateriasProfesores;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+            }
+            return null;
+        }
+
     }
 }

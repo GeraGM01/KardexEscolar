@@ -11,6 +11,14 @@
     background-color: #094988;
 }
 
+.nav-link-desp {
+    color: white !important;
+}
+
+.color-white {
+    color: white !important;
+}
+
 .navbar, .dropdown-menu {
     background-color: #094988;
 }
@@ -58,8 +66,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    max-width: 750px;
-    margin: 0 auto;
+    max-width: 750px; /* Ajusta el ancho mÃ¡ximo segÃºn tus preferencias */
+    margin: 0 auto; /* Centra horizontalmente */
 }
 
 .img-sesion {
