@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Cambiar Contrasena | Alumno";
+    Layout = null;
+}
+
+<style>
+    #correcto{
+        display: none;
+    }
+
+    #incorrecto {
+        display: none;
+    }
+</style>
+
+<form id="CambiarContrasena">
+    <div class="mb-3">
+        <label for="ContrasenaActual" class="form-label">Contraseña Actual</label>
+        <input type="password" class="form-control" id="ContrasenaActual" name="ContrasenaActual" required>
+    </div>
+    <div class="mb-3">
+        <label for="ContrasenaNueva" class="form-label">Contraseña nueva</label>
+        <input type="password" class="form-control" id="ContrasenaNueva" name="ContrasenaNueva" required>
+    </div>
+    <div class="mb-3">
+        <label for="ConfirmarContrasenaNueva" class="form-label">Repetir contraseña nueva</label>
+        <input type="password" class="form-control" id="ConfirmarContrasenaNueva" name="confirmarContrasenaNueva" required>
+    </div>
+    <div class="alert alert-success" id="correcto" role="alert">
+        Se ha cambiado la contraseña con exito.
+    </div>
+
+    <div class="alert alert-danger" id="incorrecto" role="alert">
+        Ocurrio un error al cambiar la contraseña
+    </div>
+</form>

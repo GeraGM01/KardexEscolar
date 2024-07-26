@@ -1,6 +1,7 @@
 ﻿using KardexEscolar.Models;
 using Microsoft.Data.SqlClient;
 using System.Security.Claims;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace KardexEscolar.Datos
 {
@@ -199,6 +200,94 @@ namespace KardexEscolar.Datos
             }
             return null;
         }
+
+        public Alumno ObtenDatosAlumno(int claveUnica)
+        {
+            Alumno alumno = null;
+            using (SqlConnection conexion = new SqlConnection(_contexto.Conexion))
+            {
+
+                using (SqlCommand comando = new SqlCommand("SP_ObtenDatosAlumno", conexion))
+                {
+                    comando.CommandType = System.Data.CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Clave_Unica", claveUnica);
+
+                    try
+                    {
+                        // Apertura de la conexión
+                        conexion.Open();
+
+                        // Ejecutar el procedimiento
+                        using (SqlDataReader lector = comando.ExecuteReader())
+                        {
+                            while (lector.Read())
+                            {
+                                alumno = new Alumno
+                                {
+                                    Id_Alumno = (int)lector["Id_Alumno"],
+                                    Nombre = lector["Nombre"].ToString(),
+                                    Apellido_Paterno = lector["Apellido_Paterno"].ToString(),
+                                    Apellido_Materno = lector["Apellido_Materno"].ToString(),
+                                    Semestre = (int)lector["Semestre"],
+                                    Clave_Unica = (int)lector["Clave_Unica"],
+                                    Id_Usuario = (int)lector["Id_Usuario"],
+                                };
+
+                                //Si el usuario si existe lo retornamos
+                                return alumno;
+
+                                //Aqui hacemos la busqueda de los roles que va a tener nuestro usuario
+                                //Esto se hace con la consulta a la BD entre las tablas Usuario, Usuario-Rol y Rol
+                                //y se busca mediante el id del usuario.
+
+                                //List<string> listaRoles = new List<string>();
+                                //listaRoles = ObtenRol(usuario);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        // Manejo de la excepción (por ejemplo, registrar el error)
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                conexion.Close();
+                return null;
+            }
+        }
+
+        public int CambiaContrasena(int claveUnica, string contrasenaAnterior, string contrasenaNueva)
+        {
+            using (SqlConnection conexion = new SqlConnection(_contexto.Conexion))
+            {
+                using (SqlCommand comando = new SqlCommand("SP_CambiarContrasena", conexion))
+                {
+                    comando.CommandType = System.Data.CommandType.StoredProcedure;
+                    comando.Parameters.AddWithValue("@Clave_Unica", claveUnica);
+                    comando.Parameters.AddWithValue("@contrasenaAnterior", contrasenaAnterior);
+                    comando.Parameters.AddWithValue("@contrasenaNueva", contrasenaNueva);
+
+                    try
+                    {
+                        conexion.Open();
+                        int filasAfectadas = comando.ExecuteNonQuery();
+
+                        if(filasAfectadas > 0)
+                        {
+                            return filasAfectadas;
+                        }
+                    }
+                    catch(Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                conexion.Close();
+                return 0;
+            }
+        }
+
+
 
     }
 }

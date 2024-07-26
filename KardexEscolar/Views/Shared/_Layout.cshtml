@@ -54,12 +54,12 @@
                         </li>
                     }
                     <li class="nav-item dropdown">
-                        <a class="nav-link nav-link-desp dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link nav-link-desp dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Cuenta
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item color-white" >Mi Perfil</a></li>
-                            <li><a class="dropdown-item color-white">Cambiar contraseña</a></li>
+                            <li><a asp-area="" asp-controller="Home" asp-action="PerfilAlumno" class="dropdown-item color-white">Mi Perfil</a></li>
+                            <li><a href="#" class="dropdown-item color-white" data-bs-toggle="modal" data-bs-target="#exampleModal" id="cambiarContrasenaLink">Cambiar contraseña</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a asp-area="" asp-controller="Home" asp-action="Salir" class="dropdown-item color-white">Cerrar Sesión</a></li>
                         </ul>
@@ -68,6 +68,26 @@
             </div>
         </div>
     </nav>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Cambiar Contraseña</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @Html.Partial("CambiarContrasenaAlumno")
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" id="saveChangesButton">Cambiar contraseña</button>
+                </div>
+            </div>
+        </div>
+    </div>
     @RenderBody()
 
     <div class="container">
@@ -84,9 +104,47 @@
         </footer>
     </div>
 
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script>
+        $('#saveChangesButton').on('click', function () {
+            // Evento para limpiar el formulario al cerrar el modal
+            $('#exampleModal').on('hidden.bs.modal', function () {
+                $('#CambiarContrasena')[0].reset(); // Resetea el formulario
+            });
+            var formData = $('#CambiarContrasena').serialize();
+            $("#correcto").hide();
+            $("#incorrecto").hide();
+            $.ajax({
+                url: '@Url.Action("CambiarContrasenaAlumno", "Home")',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    if (response.success) {
+                        $("#correcto").show();
+                        //alert(response.message);
+                    } else {
+                        var errorMessages = response.errors.join('\n');
+                        $("#incorrecto").show();
+                        //alert('Error al cambiar la contraseña:\n' + errorMessages);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $("#incorrecto").show();
+
+                    //alert('Error al cambiar la contraseña');
+                }
+
+            });
+        });
+
+    </script>
+
+
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

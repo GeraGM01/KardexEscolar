@@ -55,12 +55,55 @@ namespace KardexEscolar.Controllers
             return View(ProfesorMateriaAlumno);
         }
 
+        public IActionResult PerfilAlumno()
+        {
+            var claveUnica = User.FindFirst(ClaimTypes.Name)?.Value;
+            int cu = Convert.ToInt32(claveUnica);
+
+            if (claveUnica == null)
+            {
+                return NotFound();
+            }
+
+            LogicaDB logicaDB = new LogicaDB(_contexto);
+            var datosAlumno = logicaDB.ObtenDatosAlumno(cu);
+
+            return View(datosAlumno);
+        }
+
+        [HttpPost]
+        public IActionResult CambiarContrasenaAlumno(CambiarContrasena modeloCambiarContrasena)
+        {
+            if (ModelState.IsValid)
+            {
+                var claveUnica = User.FindFirst(ClaimTypes.Name)?.Value;
+                int cu = Convert.ToInt32(claveUnica);
+                string actual = modeloCambiarContrasena.ContrasenaActual.ToString();
+                string nueva = modeloCambiarContrasena.ContrasenaNueva.ToString();
+                string confiracionNueva = modeloCambiarContrasena.ConfirmarContrasenaNueva.ToString();
+
+                LogicaDB logicaDB = new LogicaDB(_contexto);
+                int filasAfectadas = logicaDB.CambiaContrasena(cu, modeloCambiarContrasena.ContrasenaActual.ToString().Trim(), modeloCambiarContrasena.ContrasenaNueva.ToString().Trim());
+
+                if(filasAfectadas > 0)
+                {
+                    //Cambio exitoso
+                    return Json(new { success = true, message = "La contraseña ha sido cambiada exitosamente." });
+                }
+            }
+
+            var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+            return Json(new { success = false, message = "Error al cambiar la contraseña.", errors });
+        }
+
 
         public async Task<IActionResult> Salir()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Index", "Acceso");
         }
+
+
 
 
 
